@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradio App Integration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        gradio-app {
+            width: 100%;
+            height: 600px;
+        }
+
+        .api-key-container {
+            margin-bottom: 20px;
+        }
+
+        .api-key-container input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .api-key-container button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .api-key-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <h1>Vision-Cair Longvu Gradio App</h1>
+
+        <!-- API Key input form -->
+        <div class="api-key-container">
+            <input type="text" id="apiKey" placeholder="Enter Hugging Face API Key" />
+            <button onclick="submitApiKey()">Submit API Key</button>
+        </div>
+
+        <!-- Gradio App iframe -->
+        <div id="gradioAppContainer" style="display:none;">
+            <gradio-app id="gradioApp" src="https://vision-cair-longvu.hf.space"></gradio-app>
+        </div>
+    </div>
+
+    <!-- Gradio JS Library -->
+    <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.44.1/gradio.js"></script>
+
+    <script>
+        function submitApiKey() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+
+            if (!apiKey) {
+                alert('Please enter a Hugging Face API key!');
+                window.location.href = "https://huggingface.co/settings/tokens"; // Redirect to Hugging Face API key generation page
+                return;
+            }
+
+            // If API key is provided, show the Gradio app
+            document.getElementById('gradioAppContainer').style.display = 'block';
+            document.getElementById('gradioApp').setAttribute('src', `https://vision-cair-longvu.hf.space?api_key=${apiKey}`);
+        }
+    </script>
+</body>
+</html>
